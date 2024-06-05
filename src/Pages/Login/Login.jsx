@@ -1,19 +1,33 @@
+import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 
 const Login = () => {
+
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const onSubmit = (data) => {
+        console.log(data);
+    };
+
     return (
         <div className="flex justify-center items-center my-5">
+            <Helmet>
+                <title>Login || MediZone</title>
+            </Helmet>
             <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-[#007bff] text-black">
                 <h1 className="text-3xl font-bold text-center">Login</h1>
-                <form noValidate="" action="" className="space-y-6">
+                <form noValidate="" action="" className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div className="space-y-1 text-sm">
-                        <label htmlFor="username" className="block dark:text-gray-600">Email</label>
-                        <input type="text" name="username" id="username" placeholder="Username" className="w-full px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600" />
+                        <label htmlFor="email" className="block dark:text-gray-600">Email</label>
+                        <input type="text" name="email" id="email" placeholder="email" className="w-full px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600" {...register('email', { required: true })}/>
+                        {errors.email && <span>{errors.email.message}</span>}
                     </div>
                     <div className="space-y-1 text-sm">
                         <label htmlFor="password" className="block dark:text-gray-600">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Password" className="w-full px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600" />
+                        <input type="password" name="password" id="password" placeholder="Password" className="w-full px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600" {...register('password', { required: true })}/>
+                        {errors.password && <span>{errors.password.message}</span>}
                         <div className="flex justify-end text-xs dark:text-gray-600">
                             <a rel="noopener noreferrer" href="#">Forgot Password?</a>
                         </div>
