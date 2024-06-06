@@ -5,10 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import useAxoisPublic from '../../Hooks/useAxoisPublic';
 import useAuth from '../../Hooks/useAuth';
 import Swal from 'sweetalert2';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const Signup = () => {
-    const { userLogOut } = useAuth();
+    const { userLogOut, loginUsingGoogle } = useAuth();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const axoisPublic = useAxoisPublic();
     const { createUserEmailPass, updateUserProfile } = useAuth();
@@ -18,6 +19,21 @@ const Signup = () => {
     const img_hosting_url = `https://api.imgbb.com/1/upload?key=${imgbbApiKey}`;
 
     const onSubmit = async (data) => {
+        const password = data.password;
+
+        if (password.length < 6) {
+            toast.error('Password must be at least 6 characters long.');
+            return;
+        }
+        if (!/[a-z]/.test(password)) {
+            toast.error("Password must contain at least one lowercase letter.");
+            return;
+        }
+        if (!/[A-Z]/.test(password)) {
+            toast.error("Password must contain at least one uppercase letter.");
+            return;
+        }
+
         const imageFile = { image: data.image[0] }
         const res = await axoisPublic.post(img_hosting_url, imageFile, {
             headers: {
@@ -31,7 +47,7 @@ const Signup = () => {
         const userData = {
             displayName: data.username,
             email: data.email,
-            password: data.password,
+            password: password,
             userRole: data.select,
             image: res.data.data.display_url
         }
@@ -66,6 +82,34 @@ const Signup = () => {
                 .catch(error => console.log(error))
         }
     };
+
+    const handleGoogle = () => {
+        loginUsingGoogle()
+            .then(res => {
+                console.log(res.user);
+                const userInfo = {
+                    image: res.user.photoURL,
+                    email: res.user.email,
+                    displayName: res.user.displayName,
+                    userRole: 'User'
+                }
+                axoisPublic.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            navigate('/')
+                            toast.success("Great to see you again! You've logged in successfully.");
+                        }
+                    })
+                    .catch(error => {
+                        if (error.response.status == 409) {
+                            toast.success("Great to see you again! You've logged in successfully.");
+                            navigate('/')
+                        }
+                    })
+
+            })
+            .catch(error => console.log(error))
+    }
 
     return (
         <div className="flex justify-center items-center my-5">
@@ -121,7 +165,7 @@ const Signup = () => {
                     <p className="px-3 text-sm dark:text-gray-600">Login with social accounts</p>
                     <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
                 </div>
-                <div className="flex justify-center space-x-4">
+                <div className="flex justify-center space-x-4"  onClick={handleGoogle}>
                     <button aria-label="Login with Google" type="button" className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-600 focus:dark:ring-violet-600">
                         <FcGoogle className="text-3xl" />
                         <p className="font-bold">Login with Google</p>
@@ -131,6 +175,7 @@ const Signup = () => {
                     <Link to='/login' rel="noopener noreferrer" href="#" className="underline dark:text-gray-800 font-bold">Login</Link>
                 </p>
             </div>
+            <Toaster />
         </div>
     );
 };

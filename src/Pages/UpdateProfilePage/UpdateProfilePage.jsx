@@ -4,6 +4,7 @@ import useAuth from "../../Hooks/useAuth";
 import useAxoisSecure from "../../Hooks/useAxoisSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const UpdateProfilePage = () => {
     const { updateUserProfile, user } = useAuth();
@@ -45,11 +46,9 @@ const UpdateProfilePage = () => {
 
         const displayName = data.username;
         const image = res.data.data.display_url;
-        console.log(displayName, image);
 
         updateUserProfile(displayName, image)
             .then(() => {
-                console.log('user profile update done');
                 const userData = {
                     displayName: displayName,
                     userRole: data.select,
@@ -58,7 +57,15 @@ const UpdateProfilePage = () => {
                 axoisSecure.patch(`/users/${user?.email}`, userData)
                     .then(res => {
                         refetch()
-                        console.log('database responce', res);
+                        if(res.data.modifiedCount){
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Your changes have been saved!",
+                                showConfirmButton: false,
+                                timer: 2500
+                              });
+                        }
                     })
             })
             .catch(error => console.log(error))

@@ -4,16 +4,17 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
+import useAxoisPublic from "../../Hooks/useAxoisPublic";
 
 const Login = () => {
-    const { loginWithEmailPassword } = useAuth();
+    const { loginWithEmailPassword, loginUsingGoogle } = useAuth();
+    const axoisPublic = useAxoisPublic();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
         const email = data.email;
         const password = data.password;
-
         loginWithEmailPassword(email, password)
             .then(res => {
                 toast.success("Great to see you again! You've logged in successfully.");
@@ -21,6 +22,34 @@ const Login = () => {
             })
             .catch(error => toast.error("Login unsuccessful. Please ensure your email and password are correct and try again."))
     };
+
+    const handleGoogle = () => {
+        loginUsingGoogle()
+            .then(res => {
+                console.log(res.user);
+                const userInfo = {
+                    image: res.user.photoURL,
+                    email: res.user.email,
+                    displayName: res.user.displayName,
+                    userRole: 'User'
+                }
+                axoisPublic.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            navigate('/')
+                            toast.success("Great to see you again! You've logged in successfully.");
+                        }
+                    })
+                    .catch(error => {
+                        if (error.response.status == 409) {
+                            toast.success("Great to see you again! You've logged in successfully.");
+                            navigate('/')
+                        }
+                    })
+
+            })
+            .catch(error => console.log(error))
+    }
 
     return (
         <div className="flex justify-center items-center my-5">
@@ -50,7 +79,7 @@ const Login = () => {
                     <p className="px-3 text-sm dark:text-gray-600">Login with social accounts</p>
                     <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
                 </div>
-                <div className="flex justify-center space-x-4">
+                <div onClick={handleGoogle} className="flex justify-center space-x-4">
                     <button aria-label="Login with Google" type="button" className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-600 focus:dark:ring-violet-600">
                         <FcGoogle className="text-3xl" />
                         <p className="font-bold">Login with Google</p>

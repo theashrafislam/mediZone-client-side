@@ -3,10 +3,22 @@ import logo from "../../../public/mediZone-logo.png";
 import { FaShoppingCart } from "react-icons/fa";
 import useAuth from "../../Hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
+// import { useQuery } from "@tanstack/react-query";
+import useAxoisPublic from "../../Hooks/useAxoisPublic";
 
 const Navbar = () => {
     const { user, userLogOut } = useAuth();
     console.log(user);
+    // const axoisPublic = useAxoisPublic();
+
+    // const { data: forPhoto } = useQuery({
+    //     queryKey: ['forPhoto'],
+    //     queryFn: async () => {
+    //         const res = await axoisPublic.get(`/users/${user?.email}`);
+    //         return res.data
+    //     }
+    // })
+    // console.log(forPhoto);
 
     const handleLogOut = () => {
         userLogOut()
@@ -54,7 +66,7 @@ const Navbar = () => {
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
-                                    <img alt="Tailwind CSS Navbar component" src={user.photoURL} />
+                                    <img alt="Tailwind CSS Navbar component" src={user?.photoURL}/>
                                 </div>
                             </div>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
