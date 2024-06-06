@@ -1,16 +1,70 @@
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useAxoisPublic from '../../Hooks/useAxoisPublic';
+import useAuth from '../../Hooks/useAuth';
+import Swal from 'sweetalert2';
+
 
 const Signup = () => {
+    const { userLogOut } = useAuth();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const axoisPublic = useAxoisPublic();
+    const { createUserEmailPass, updateUserProfile } = useAuth();
+    const navigate = useNavigate()
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const imgbbApiKey = import.meta.env.VITE_IMGBB_API_KEY;
+    const img_hosting_url = `https://api.imgbb.com/1/upload?key=${imgbbApiKey}`;
 
+    const onSubmit = async (data) => {
+        const imageFile = { image: data.image[0] }
+        const res = await axoisPublic.post(img_hosting_url, imageFile, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        });
 
+        const displayName = data.username;
+        const image = res.data.data.display_url;
 
-    const onSubmit = (data) => {
-        console.log(data);
+        const userData = {
+            displayName: data.username,
+            email: data.email,
+            password: data.password,
+            userRole: data.select,
+            image: res.data.data.display_url
+        }
+
+        if (res.data.success) {
+            createUserEmailPass(data.email, data.password)
+                .then(() => {
+                    updateUserProfile(displayName, image)
+                        .then(() => {
+                            axoisPublic.post('/users', userData)
+                                .then(res => {
+                                    if (res.data.insertedId) {
+                                        reset()
+                                        Swal.fire({
+                                            position: "top-end",
+                                            icon: "success",
+                                            title: "User Create Successfully.",
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                        });
+                                        userLogOut()
+                                            .then(() => {
+                                                navigate('/login');
+                                            })
+                                            .catch(error => console.log(error))
+                                    }
+                                })
+                        })
+                        .catch(error => console.log(error))
+
+                })
+                .catch(error => console.log(error))
+        }
     };
 
     return (
@@ -42,13 +96,6 @@ const Signup = () => {
                                 <a rel="noopener noreferrer" href="#">Forgot Password?</a>
                             </div>
                         </div>
-                        {/* <div className="space-y-1 text-sm w-full">
-                            <select className="select select-bordered w-full">
-                                <option disabled selected>Who shot first?</option>
-                                <option>Han Solo</option>
-                                <option>Greedo</option>
-                            </select>
-                        </div> */}
                         <div className="space-y-1 text-sm w-full">
                             <select
                                 className="select select-bordered w-full"
@@ -56,15 +103,15 @@ const Signup = () => {
                                 defaultValue=""
                             >
                                 <option value="" disabled>What do you want to be?</option>
-                                <option value="Han Solo">User</option>
-                                <option value="Greedo">Seller</option>
+                                <option value="User">User</option>
+                                <option value="Seller">Seller</option>
                             </select>
                             {errors.select && <span>{errors.select.message}</span>}
                         </div>
                     </div>
                     <div className="space-y-1 text-sm">
-                        <input type="file" className="file-input w-full" {...register('photo', { required: true })} />
-                        {errors.photo && <span>{errors.photo.message}</span>}
+                        <input type="file" className="file-input w-full" {...register('image', { required: true })} />
+                        {errors.image && <span>{errors.image.message}</span>}
                     </div>
 
                     <button className="block w-full p-3 text-center rounded-md font-bold hover:bg-black hover:text-white bg-white">Sign Up</button>
