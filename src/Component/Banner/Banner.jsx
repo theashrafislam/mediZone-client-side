@@ -28,10 +28,9 @@ const Banner = () => {
         }
     });
 
-    console.log(sliders);
 
     return (
-        <div className='h-64'>
+        <div className=''>
             <Swiper
                 slidesPerView={3}
                 spaceBetween={30}

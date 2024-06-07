@@ -9,6 +9,7 @@ import Cart from "../Pages/Cart/Cart";
 import UpdateProfile from "../Pages/UpdateProfile/UpdateProfile";
 import PrivateRouter from "./PrivateRouter";
 import UpdateProfilePage from "../Pages/UpdateProfilePage/UpdateProfilePage";
+import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
 
 export const router = createBrowserRouter([
     {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
             {
                 path: "/update-profile-page",
                 element: <PrivateRouter><UpdateProfilePage/></PrivateRouter>
+            },
+            {
+                path: "/category-details/:id",
+                element: <CategoryDetails/>
             }
         ]
     },
