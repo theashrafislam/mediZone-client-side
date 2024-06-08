@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
 import useAxoisSecure from "../../Hooks/useAxoisSecure";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const UpdateProfile = () => {
     const { user } = useAuth();
@@ -17,6 +18,9 @@ const UpdateProfile = () => {
     const { userRole, email, displayName, image } = userData;
     return (
         <div className="flex justify-center items-center mt-5">
+            <Helmet>
+                <title>Update Profile || MediZone</title>
+            </Helmet>
             <div className="flex flex-col justify-center w-6/12 m-auto p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-50 dark:text-gray-800">
                 <img src={image} alt="" className="w-52 mx-auto rounded-full dark:bg-gray-500 aspect-square" />
                 <div className="space-y-4 text-center divide-y dark:divide-gray-300">

@@ -20,7 +20,7 @@ const CategoryCardSection = () => {
                 <h2 className="text-2xl font-semibold">Explore Our Medicine Categories</h2>
                 <p>Discover the wide range of medications available to meet your health needs. From pain relief to managing chronic conditions, our comprehensive categories provide the information you need to choose the right medicine.</p>
             </div>
-            <div className="my-10 flex gap-10">
+            <div className="my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10">
                 {
                     categorys.map(category =>
                         <Link to={`/category-details/${category.categoryName}`} key={category._id} className="text-center border-2 p-3 rounded-xl">

@@ -15,15 +15,13 @@ import useAxoisPublic from '../../Hooks/useAxoisPublic';
 const DiscountProducts = () => {
     const axoisPublic = useAxoisPublic();
 
-    const {data: discountProducts = [] } = useQuery({
+    const { data: discountProducts = [] } = useQuery({
         queryKey: ['discountProducts'],
-        queryFn: async() => {
+        queryFn: async () => {
             const res = await axoisPublic.get('/discountProducts');
             return res.data;
         }
     })
-
-    console.log(discountProducts);
 
     return (
         <div className='my-20'>
@@ -37,16 +35,18 @@ const DiscountProducts = () => {
                 autoplay={{
                     delay: 2500,
                     disableOnInteraction: false,
-                  }}
+                }}
                 pagination={{
                     clickable: true,
                 }}
                 modules={[FreeMode, Pagination]}
                 className="mySwiper"
             >
-                {
-                    discountProducts.map(photo => <SwiperSlide className='border-2 rounded-xl p-5' key={photo._id}><img className='w-96 h-96' src={photo.image} alt="" /></SwiperSlide>)
-                }
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+                    {
+                        discountProducts.map(photo => <SwiperSlide className='border-2 rounded-xl p-5' key={photo._id}><img className='w-96 h-96' src={photo.image} alt="" /></SwiperSlide>)
+                    }
+                </div>
             </Swiper>
         </div>
     );
