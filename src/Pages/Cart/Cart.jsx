@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 const Cart = () => {
 
     const [carts, refetch] = useCart();
+    const totalPrice = carts.reduce((total, currentValue) => total + currentValue.price, 0);
     const axoisSecure = useAxoisSecure();
     const { user } = useAuth();
 
@@ -70,9 +71,13 @@ const Cart = () => {
                 <h1 className="text-3xl font-bold">Your Shopping Cart</h1>
                 <p>Review the items in your cart before proceeding to checkout. You can update quantities, remove items, or continue shopping. When you're ready, click 'Checkout' to complete your purchase.</p>
             </div>
+            <div className="flex justify-evenly items-center border-b-2 pb-2">
+                <h3 className="text-3xl">Total Product: {carts.length}</h3>
+                <h3 className="text-3xl">Total Price: {totalPrice}</h3>
+            </div>
             <div className="flex justify-between items-center my-5">
                 <button disabled={carts.length <= 0} onClick={handleAllClear} className="block btn p-3 text-center rounded-md font-bold hover:bg-black hover:text-white bg-white">Clear All </button>
-                <Link to="/checkOutPage" className={carts.length === 0 ? 'pointer-events-none' : ''}>
+                <Link to="/payment" className={carts.length === 0 ? 'pointer-events-none' : ''}>
                     <button disabled={carts.length <= 0} className="block btn p-3 text-center rounded-md font-bold hover:bg-black hover:text-white bg-white">Checkout
                     </button>
                 </Link>

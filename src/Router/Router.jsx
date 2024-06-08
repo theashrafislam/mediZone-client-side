@@ -11,6 +11,8 @@ import PrivateRouter from "./PrivateRouter";
 import UpdateProfilePage from "../Pages/UpdateProfilePage/UpdateProfilePage";
 import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
 import CheckOutPage from "../Pages/CheckOutPage/CheckOutPage";
+import Payment from "../Pages/CheckOutPage/Payment";
+import InvoicePage from "../Pages/InvoicePage/InvoicePage";
 
 export const router = createBrowserRouter([
     {
@@ -51,8 +53,12 @@ export const router = createBrowserRouter([
                 element: <CategoryDetails/>
             },
             {
-                path: "/checkOutPage",
-                element: <PrivateRouter><CheckOutPage/></PrivateRouter>
+                path: "/payment",
+                element: <PrivateRouter><Payment/></PrivateRouter>
+            },
+            {
+                path: '/invoicePage',
+                element: <PrivateRouter><InvoicePage/></PrivateRouter>
             }
         ]
     },

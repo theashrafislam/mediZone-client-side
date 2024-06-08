@@ -5,9 +5,11 @@ import Footer from "../Component/Footer/Footer";
 const Root = () => {
     return (
         <div>
-            <Navbar/>
-            <Outlet/>
-            <Footer/>
+            <Navbar />
+            <div className='min-h-[calc(100vh-361px)]'>
+                <Outlet></Outlet>
+            </div>
+            <Footer />
         </div>
     );
 };

@@ -1,14 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useAxoisPublic from '../../Hooks/useAxoisPublic';
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import useAuth from '../../Hooks/useAuth';
+import useAxoisSecure from '../../Hooks/useAxoisSecure';
+import useCart from '../../Hooks/useCart';
 
 const CategoryDetails = () => {
 
     const { id: category } = useParams();
     const axoisPublic = useAxoisPublic();
+    const { user } = useAuth();
     const [selectedItem, setSelectedItem] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    const axiosSecure = useAxoisSecure();
+    const navigate = useNavigate();
+    const [ , refetch] = useCart();
     console.log(category);
 
     const { data: categoryData = [] } = useQuery({
@@ -34,6 +42,52 @@ const CategoryDetails = () => {
             }
         }
     }, [modalOpen, selectedItem]);
+
+    const handleAddCart = (item) => {
+        if (user && user.email) {
+            const cartItem = {
+                productId: item._id,
+                email: user.email,
+                medicineName: item.medicineName,
+                price: item.price,
+                company: item.company,
+                genericName: item.genericName,
+                category: item.category,
+                description: item.description,
+                image: item.image
+            }
+            axiosSecure.post('/carts', cartItem)
+                .then((res) => {
+                    console.log(res.data);
+                    if (res.data.insertedId) {
+                        refetch()
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: `${item.medicineName}, Added to the cart.`,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                })
+        }
+        else {
+            Swal.fire({
+                title: "User Not Login In",
+                text: "If you add the cartt please login",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Login In"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // , { state: { from: location } }
+                    navigate('/login')
+                }
+            });
+        }
+    }
 
     return (
         <div className='mt-10'>
@@ -62,7 +116,7 @@ const CategoryDetails = () => {
                                     <td>{item.company}</td>
                                     <td>${item.price}</td>
                                     <td className='flex items-center justify-center gap-5'>
-                                        <button className='btn'>Select</button>
+                                        <button onClick={() => handleAddCart(item)} className='btn'>Select</button>
                                         <button onClick={() => handleEyeButton(item)} className='btn'>Eye</button>
                                     </td>
                                 </tr>)
