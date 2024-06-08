@@ -80,7 +80,7 @@ const Navbar = () => {
                     ) : (
                         <div className="dropdown dropdown-end mr-4">
                             <button tabIndex={0} className="btn m-1">Join Us</button>
-                            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                            <ul tabIndex={0} className="dropdown-content z-[2] menu p-2 shadow bg-base-100 rounded-box w-52">
                                 <li className="font-semibold"><NavLink to="/signup">Sign Up</NavLink></li>
                                 <li className="font-semibold"><NavLink to="/login">Login</NavLink></li>
                             </ul>

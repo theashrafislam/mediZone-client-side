@@ -71,7 +71,7 @@ const Cart = () => {
                 <p>Review the items in your cart before proceeding to checkout. You can update quantities, remove items, or continue shopping. When you're ready, click 'Checkout' to complete your purchase.</p>
             </div>
             <div className="flex justify-between items-center my-5">
-                <button onClick={handleAllClear} className="block btn p-3 text-center rounded-md font-bold hover:bg-black hover:text-white bg-white">Clear All </button>
+                <button disabled={carts.length <= 0} onClick={handleAllClear} className="block btn p-3 text-center rounded-md font-bold hover:bg-black hover:text-white bg-white">Clear All </button>
                 <Link to="/checkOutPage" className={carts.length === 0 ? 'pointer-events-none' : ''}>
                     <button disabled={carts.length <= 0} className="block btn p-3 text-center rounded-md font-bold hover:bg-black hover:text-white bg-white">Checkout
                     </button>

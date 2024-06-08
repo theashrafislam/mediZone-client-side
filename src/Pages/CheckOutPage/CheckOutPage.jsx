@@ -1,7 +1,9 @@
+import React from 'react';
+
 const CheckOutPage = () => {
     return (
         <div>
-            <h1>this is check out page</h1>
+            <h1>this is checkout page</h1>
         </div>
     );
 };

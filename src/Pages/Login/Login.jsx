@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxoisPublic from "../../Hooks/useAxoisPublic";
@@ -11,6 +11,9 @@ const Login = () => {
     const axoisPublic = useAxoisPublic();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state || "/";
+    console.log(location);
 
     const onSubmit = (data) => {
         const email = data.email;
@@ -18,7 +21,7 @@ const Login = () => {
         loginWithEmailPassword(email, password)
             .then(res => {
                 toast.success("Great to see you again! You've logged in successfully.");
-                navigate('/')
+                navigate(from)
             })
             .catch(error => toast.error("Login unsuccessful. Please ensure your email and password are correct and try again."))
     };
@@ -36,7 +39,7 @@ const Login = () => {
                 axoisPublic.post('/users', userInfo)
                     .then(res => {
                         if (res.data.insertedId) {
-                            navigate('/')
+                            navigate(from)
                             toast.success("Great to see you again! You've logged in successfully.");
                         }
                     })

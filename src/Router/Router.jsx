@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/checkOutPage",
-                element: <CheckOutPage/>
+                element: <PrivateRouter><CheckOutPage/></PrivateRouter>
             }
         ]
     },

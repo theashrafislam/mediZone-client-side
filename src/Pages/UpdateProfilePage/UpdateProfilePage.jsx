@@ -56,6 +56,7 @@ const UpdateProfilePage = () => {
                 }
                 axoisSecure.patch(`/users/${user?.email}`, userData)
                     .then(res => {
+                        console.log(res);
                         refetch()
                         if(res.data.modifiedCount){
                             Swal.fire({
