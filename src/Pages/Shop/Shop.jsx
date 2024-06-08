@@ -6,6 +6,7 @@ import useAxoisSecure from "../../Hooks/useAxoisSecure";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import useCart from "../../Hooks/useCart";
 
 const Shop = () => {
 
@@ -15,6 +16,7 @@ const Shop = () => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const navigate = useNavigate();
+    const [ ,refetch] = useCart();
 
     const { data: allMedicines = [] } = useQuery({
         queryKey: ['allMedicines'],
@@ -55,6 +57,7 @@ const Shop = () => {
                 .then((res) => {
                     console.log(res.data);
                     if (res.data.insertedId) {
+                        refetch()
                         Swal.fire({
                             position: "top-end",
                             icon: "success",
@@ -76,7 +79,8 @@ const Shop = () => {
                 confirmButtonText: "Yes, Login In"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    navigate('/login', { state: { from: location } })
+                    // , { state: { from: location } }
+                    navigate('/login')
                 }
             });
         }

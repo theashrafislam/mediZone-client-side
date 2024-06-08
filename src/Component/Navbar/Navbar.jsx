@@ -5,10 +5,12 @@ import useAuth from "../../Hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
 // import { useQuery } from "@tanstack/react-query";
 import useAxoisPublic from "../../Hooks/useAxoisPublic";
+import useCart from "../../Hooks/useCart";
 
 const Navbar = () => {
     const { user, userLogOut } = useAuth();
     console.log(user);
+    const [carts] = useCart();
     // const axoisPublic = useAxoisPublic();
 
     // const { data: forPhoto } = useQuery({
@@ -51,7 +53,7 @@ const Navbar = () => {
                     <ul className="menu menu-horizontal px-1">
                         <li><NavLink to="/">Home</NavLink></li>
                         <li><NavLink to="/shop">Shop</NavLink></li>
-                        <li><NavLink to="/cart"><FaShoppingCart className="text-gray-500 text-2xl" /></NavLink></li>
+                        <li><NavLink to="/cart"><FaShoppingCart className="text-gray-500 text-2xl" /><span className="text-white font-bold">{carts.length > 0 ? carts.length : '0'}</span></NavLink></li>
                     </ul>
                 </div>
                 <div className="navbar-end">

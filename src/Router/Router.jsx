@@ -10,6 +10,7 @@ import UpdateProfile from "../Pages/UpdateProfile/UpdateProfile";
 import PrivateRouter from "./PrivateRouter";
 import UpdateProfilePage from "../Pages/UpdateProfilePage/UpdateProfilePage";
 import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
+import CheckOutPage from "../Pages/CheckOutPage/CheckOutPage";
 
 export const router = createBrowserRouter([
     {
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/cart",
-                element: <Cart/>
+                element: <PrivateRouter><Cart/></PrivateRouter>
             },
             {
                 path: '/login',
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
             {
                 path: "/category-details/:id",
                 element: <CategoryDetails/>
+            },
+            {
+                path: "/checkOutPage",
+                element: <CheckOutPage/>
             }
         ]
     },
