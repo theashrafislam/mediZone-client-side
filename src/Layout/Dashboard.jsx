@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaUsers } from "react-icons/fa";
 import { GiShoppingBag } from "react-icons/gi";
-import { IoHomeSharp } from "react-icons/io5";
-import { MdOutlinePayment, MdPayment } from "react-icons/md";
+import { IoHome, IoHomeSharp } from "react-icons/io5";
+import { MdCategory, MdOutlinePayment, MdOutlinePayments, MdPayment } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import useAxoisSecure from "../Hooks/useAxoisSecure";
-import { TbMedicineSyrup } from "react-icons/tb";
-import { RiAdvertisementLine } from "react-icons/ri";
+import { TbMedicineSyrup, TbReportAnalytics } from "react-icons/tb";
+import { RiAdvertisementFill, RiAdvertisementLine } from "react-icons/ri";
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -49,11 +49,12 @@ const Dashboard = () => {
                     }
                     {
                         isAdmin ? <>
-                            <li><NavLink to="/dashboard/admin-home"><MdOutlinePayment className="text-2xl" />Home Page</NavLink></li>
-                            <li><NavLink to="/dashboard/manage-users"><MdOutlinePayment className="text-2xl" />Manage Users</NavLink></li>
-                            <li><NavLink to="/dashboard/manage-category"><MdOutlinePayment className="text-2xl" />Manage Category</NavLink></li>
-                            <li><NavLink to="/dashboard/payment-management"><MdOutlinePayment className="text-2xl" />Payment management</NavLink></li>
-                            <li><NavLink to="/dashboard/sales-report"><MdOutlinePayment className="text-2xl" />Sales Report</NavLink></li>
+                            <li><NavLink to="/dashboard/admin-home"><IoHome className="text-2xl" />Home Page</NavLink></li>
+                            <li><NavLink to="/dashboard/manage-users"><FaUsers className="text-2xl" />Manage Users</NavLink></li>
+                            <li><NavLink to="/dashboard/manage-category"><MdCategory className="text-2xl" />Manage Category</NavLink></li>
+                            <li><NavLink to="/dashboard/payment-management"><MdOutlinePayments className="text-2xl" />Payment management</NavLink></li>
+                            <li><NavLink to="/dashboard/sales-report"><TbReportAnalytics className="text-2xl" />Sales Report</NavLink></li>
+                            <li><NavLink to="/dashboard/manage-banner-advertisements"><RiAdvertisementFill className="text-2xl" />Manage Banner Advertisements</NavLink></li>
                         </> : <> </>
                     }
 
