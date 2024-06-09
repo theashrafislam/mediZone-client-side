@@ -14,6 +14,11 @@ import CheckOutPage from "../Pages/CheckOutPage/CheckOutPage";
 import Payment from "../Pages/CheckOutPage/Payment";
 import InvoicePage from "../Pages/InvoicePage/InvoicePage";
 import Dashboard from "../Layout/Dashboard";
+import PaymentHistory from "../Dashboard/PaymentHistory";
+import SellerHome from "../Dashboard/SellerHome";
+import ManageMedicines from "../Dashboard/ManageMedicines";
+import SellerPaymentHistory from "../Dashboard/SellerPaymentHistory";
+import AskForAdvertisement from "../Dashboard/AskForAdvertisement";
 
 export const router = createBrowserRouter([
     {
@@ -67,8 +72,31 @@ export const router = createBrowserRouter([
         path: '/dashboard',
         element: <PrivateRouter><Dashboard/></PrivateRouter>,
         children: [
+
+            // user router 
+            
             {
-                path: ''
+                path: 'payment-history',
+                element: <PaymentHistory/>
+            },
+
+            // seller router 
+
+            {
+                path: 'seller-home',
+                element: <SellerHome/>
+            },
+            {
+                path: 'manage-medicines',
+                element: <ManageMedicines/>
+            },
+            {
+                path: 'seller-payment-history',
+                element: <SellerPaymentHistory/>
+            },
+            {
+                path: 'ask-for-advertisement',
+                element: <AskForAdvertisement/>
             }
         ]
     }

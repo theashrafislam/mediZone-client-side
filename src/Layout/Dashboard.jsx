@@ -1,40 +1,61 @@
-import { FaBook, FaCalendarAlt, FaCartPlus, FaList, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import { FaShoppingCart } from "react-icons/fa";
 import { GiShoppingBag } from "react-icons/gi";
-import { IoMdContact, IoMdMenu } from "react-icons/io";
 import { IoHomeSharp } from "react-icons/io5";
-import { MdOutlinePayment, MdOutlineReviews } from "react-icons/md";
-import { TbBrandBooking } from "react-icons/tb";
+import { MdOutlinePayment, MdPayment } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
+import useAxoisSecure from "../Hooks/useAxoisSecure";
+import { TbMedicineSyrup } from "react-icons/tb";
+import { RiAdvertisementLine } from "react-icons/ri";
 
 const Dashboard = () => {
-    const isAdmin = false;
+    const { user } = useAuth();
+    const axoisSecure = useAxoisSecure();
+
+    const { data: users = {} } = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const res = await axoisSecure.get(`/users/${user.email}`);
+            return res.data;
+        }
+    });
+
+    const isUser = users.userRole === 'User';
+    const isSeller = users.userRole === 'Seller';
+    const isAdmin = users.userRole === 'Admin';
+
+
     return (
         <div className="flex">
             {/* dashboard side bar */}
-            <div className="w-64 min-h-screen bg-[#D1A054]">
+            <div className="w-64 min-h-screen bg-[#007bff] text-white">
 
                 <ul className="menu p-4">
                     <h2 className="text-center text-2xl font-bold">Dashboard</h2>
                     <div className="divider"></div>
                     {
-                        isAdmin ? <>
-                            <li><NavLink to="/dashboard/admin-home"><IoHomeSharp className="text-2xl" />Admin Home</NavLink></li>
-                            <li><NavLink to="/dashboard/add-items"><FaUtensils className="text-2xl" />Add Items</NavLink></li>
-                            <li><NavLink to="/dashboard/manage-items"><FaList className="text-2xl" />Manage Items</NavLink></li>
-                            <li><NavLink to="/dashboard/manage-bookings"><FaBook className="text-2xl" />Manage Bookings</NavLink></li>
-                            <li><NavLink to="/dashboard/all-users"><FaUsers className="text-2xl" />All Users</NavLink></li>
-                        </>
-                            :
-                            <>
-                                <li><NavLink to="/dashboard/user-home"><IoHomeSharp className="text-2xl" />User Home</NavLink></li>
-                                <li><NavLink to="/dashboard/reservation"><FaCalendarAlt className="text-2xl" />Reservation</NavLink></li>
-                                {/* <li><NavLink to="/dashboard/cart"><FaCartPlus className="text-2xl" />My Cart ({cart?.length > 0 ? cart.length : '0'})</NavLink></li> */}
-                                <li><NavLink to="/dashboard/payment-history"><MdOutlinePayment className="text-2xl" />Payment History</NavLink></li>
-                                <li><NavLink to="/dashboard/review"><MdOutlineReviews className="text-2xl" />Add Review</NavLink></li>
-                                <li><NavLink to="/dashboard/booking"><TbBrandBooking className="text-2xl" />My Booking</NavLink></li>
-                            </>
+                        isUser ? <>
+                            <li><NavLink to="/dashboard/payment-history"><MdOutlinePayment className="text-2xl" />Payment History</NavLink></li>
+                        </> : <> </>
                     }
-
+                    {
+                        isSeller ? <>
+                            <li><NavLink to="/dashboard/seller-home"><IoHomeSharp className="text-2xl" />Home page</NavLink></li>
+                            <li><NavLink to="/dashboard/manage-medicines"><TbMedicineSyrup className="text-2xl" />Manage Medicines</NavLink></li>
+                            <li><NavLink to="/dashboard/seller-payment-history"><MdPayment className="text-2xl" />Payment History</NavLink></li>
+                            <li><NavLink to="/dashboard/ask-for-advertisement"><RiAdvertisementLine className="text-2xl" />Ask For Advertisement</NavLink></li>
+                        </> : <> </>
+                    }
+                    {
+                        isAdmin ? <>
+                            <li><NavLink to="/dashboard/admin-home"><MdOutlinePayment className="text-2xl" />Home Page</NavLink></li>
+                            <li><NavLink to="/dashboard/manage-users"><MdOutlinePayment className="text-2xl" />Manage Users</NavLink></li>
+                            <li><NavLink to="/dashboard/manage-category"><MdOutlinePayment className="text-2xl" />Manage Category</NavLink></li>
+                            <li><NavLink to="/dashboard/payment-management"><MdOutlinePayment className="text-2xl" />Payment management</NavLink></li>
+                            <li><NavLink to="/dashboard/sales-report"><MdOutlinePayment className="text-2xl" />Sales Report</NavLink></li>
+                        </> : <> </>
+                    }
 
                     <div className="divider"></div>
 

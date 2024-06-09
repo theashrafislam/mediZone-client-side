@@ -4,12 +4,11 @@ import useAuth from '../../Hooks/useAuth';
 import useAxoisSecure from '../../Hooks/useAxoisSecure';
 import useCart from '../../Hooks/useCart';
 import { useRef } from 'react';
-import generatePDF from 'react-to-pdf';
 
 const InvoicePage = () => {
     const { user } = useAuth();
     const axoisSecure = useAxoisSecure();
-    const targetRef = useRef();
+    const printRef = useRef(null);
 
     const { data: users = {}, isLoading: isUserLoading } = useQuery({
         queryKey: ['users'],
@@ -18,24 +17,37 @@ const InvoicePage = () => {
             return res.data;
         }
     });
-    const [carts] = useCart();
+    const [carts, refetch] = useCart();
 
+    const handlePrint = () => {
+        axoisSecure.delete(`/cart/${user.email}`)
+            .then(res => {
 
-    // const handlePrint = () => {
+                if (res.data.deletedCount > 0) {
+                    refetch()
+                    const printContent = printRef.current.innerHTML;
+                    const originalContents = document.body.innerHTML;
+                    document.body.innerHTML = printContent;
+                    window.print();
+                    document.body.innerHTML = originalContents;
+                }
+            })
 
-    // };
+    };
 
     const calculateTotal = () => {
         return carts.reduce((total, item) => total + item.price, 0).toFixed(2);
     };
 
     if (isUserLoading) {
-        return <div>Loading...</div>;
+        return <div className='flex justify-center items-center mt-10'>
+            <span className="loading loading-bars loading-lg"></span>
+        </div>
     }
 
     return (
         <div className="max-w-4xl mx-auto my-10 p-8 bg-white shadow-lg">
-            <div className='border-2 p-3' ref={targetRef}>
+            <div className='border-2 p-3' ref={printRef}>
                 <header className="text-center mb-8">
                     <img src={logo} alt="Website Logo" className="w-32 mx-auto mb-4" />
                     <h1 className="text-3xl font-bold">Your Invoice</h1>
@@ -77,7 +89,7 @@ const InvoicePage = () => {
                 )}
             </div>
             <button
-                onClick={() => generatePDF(targetRef, {filename: 'page.pdf'})}
+                onClick={handlePrint}
                 className="block mt-3 w-32 mx-auto py-2 px-4 bg-blue-500 text-white font-bold rounded hover:bg-blue-700"
             >
                 Print

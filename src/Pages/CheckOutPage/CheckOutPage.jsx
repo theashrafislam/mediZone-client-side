@@ -18,6 +18,7 @@ const CheckOutPage = () => {
     const [clientSecret, setClientSecret] = useState('');
     const [transactionId, setTransactionId] = useState('');
     const [carts, refetch] = useCart();
+    console.log(carts);
     const totalPrice = carts.reduce((total, item) => total + item.price, 0);
 
     useEffect(() => {
@@ -72,9 +73,10 @@ const CheckOutPage = () => {
                     email: user.email,
                     price: totalPrice,
                     data: new Date(), //utc data convert. use moment js to
-                    status: 'Payment Successfully',
+                    status: 'Pending',
                     cartIds: carts.map(item => item._id),
-                    transactionId: paymentIntent.id
+                    transactionId: paymentIntent.id,
+                    sellerEmail: carts.map(item => item.sellerEmail)
                 }
                 const res = await axiosSecure.post('/payments', payment)
                 console.log(res);

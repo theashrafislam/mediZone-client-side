@@ -51,7 +51,8 @@ const Shop = () => {
                 genericName: item.genericName,
                 category: item.category,
                 description: item.description,
-                image: item.image
+                image: item.image,
+                sellerEmail: item.sellerEmail
             }
             axiosSecure.post('/carts', cartItem)
                 .then((res) => {
