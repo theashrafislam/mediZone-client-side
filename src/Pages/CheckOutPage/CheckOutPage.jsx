@@ -72,9 +72,8 @@ const CheckOutPage = () => {
                     email: user.email,
                     price: totalPrice,
                     data: new Date(), //utc data convert. use moment js to
-                    status: 'Pending',
+                    status: 'Payment Successfully',
                     cartIds: carts.map(item => item._id),
-                    menuItemIds: carts.map(item => item.menuId),
                     transactionId: paymentIntent.id
                 }
                 const res = await axiosSecure.post('/payments', payment)

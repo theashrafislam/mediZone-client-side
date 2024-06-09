@@ -13,6 +13,7 @@ import CategoryDetails from "../Pages/CategoryDetails/CategoryDetails";
 import CheckOutPage from "../Pages/CheckOutPage/CheckOutPage";
 import Payment from "../Pages/CheckOutPage/Payment";
 import InvoicePage from "../Pages/InvoicePage/InvoicePage";
+import Dashboard from "../Layout/Dashboard";
 
 export const router = createBrowserRouter([
     {
@@ -62,4 +63,13 @@ export const router = createBrowserRouter([
             }
         ]
     },
+    {
+        path: '/dashboard',
+        element: <PrivateRouter><Dashboard/></PrivateRouter>,
+        children: [
+            {
+                path: ''
+            }
+        ]
+    }
 ]);
