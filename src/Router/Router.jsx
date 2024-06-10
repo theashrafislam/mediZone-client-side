@@ -26,6 +26,7 @@ import PaymentManagement from "../Dashboard/AdminComponent/PaymentManagement";
 import SalesReport from "../Dashboard/AdminComponent/SalesReport";
 import ManagebannerAdvertise from "../Dashboard/AdminComponent/ManagebannerAdvertise";
 import CategoryUpdatePage from "../Dashboard/AdminComponent/CategoryUpdatePage";
+import AdminRouter from "./AdminRouter";
 
 export const router = createBrowserRouter([
     {
@@ -109,31 +110,31 @@ export const router = createBrowserRouter([
             // admin router 
             {
                 path: "admin-home",
-                element: <AdminHome/>
+                element: <AdminRouter><AdminHome/></AdminRouter>
             },
             {
                 path: "manage-users",
-                element: <ManageUsers/>
+                element: <AdminRouter><ManageUsers/></AdminRouter>
             },
             {
                 path: "manage-category",
-                element: <ManageCategory/>
+                element: <AdminRouter><ManageCategory/></AdminRouter>
             },
             {
                 path: "payment-management",
-                element: <PaymentManagement/>
+                element: <AdminRouter><PaymentManagement/></AdminRouter>
             },
             {
                 path: "sales-report",
-                element: <SalesReport/>
+                element: <AdminRouter><SalesReport/></AdminRouter>
             },
             {
                 path: 'manage-banner-advertisements',
-                element: <ManagebannerAdvertise/>
+                element: <AdminRouter><ManagebannerAdvertise/></AdminRouter>
             },
             {
                 path: 'category-update-page/:id',
-                element: <CategoryUpdatePage/>
+                element: <AdminRouter><CategoryUpdatePage/></AdminRouter>
             }
         ]
     }
