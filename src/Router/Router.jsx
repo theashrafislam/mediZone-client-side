@@ -25,6 +25,7 @@ import ManageCategory from "../Dashboard/AdminComponent/ManageCategory";
 import PaymentManagement from "../Dashboard/AdminComponent/PaymentManagement";
 import SalesReport from "../Dashboard/AdminComponent/SalesReport";
 import ManagebannerAdvertise from "../Dashboard/AdminComponent/ManagebannerAdvertise";
+import CategoryUpdatePage from "../Dashboard/AdminComponent/CategoryUpdatePage";
 
 export const router = createBrowserRouter([
     {
@@ -129,6 +130,10 @@ export const router = createBrowserRouter([
             {
                 path: 'manage-banner-advertisements',
                 element: <ManagebannerAdvertise/>
+            },
+            {
+                path: 'category-update-page/:id',
+                element: <CategoryUpdatePage/>
             }
         ]
     }

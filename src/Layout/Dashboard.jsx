@@ -21,9 +21,12 @@ const Dashboard = () => {
         }
     });
 
+
     const isUser = users.userRole === 'User';
     const isSeller = users.userRole === 'Seller';
     const isAdmin = users.userRole === 'Admin';
+
+    // console.log(isAdmin, isSeller, isUser);
 
 
     return (

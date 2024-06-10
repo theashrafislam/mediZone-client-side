@@ -26,6 +26,7 @@ const AskForAdvertisement = () => {
         const image = res.data.data.display_url;
         data.image = image;
         const info = {
+            medicineName: data.medicineName,
             description: data.description,
             image: image,
             status: 'Request',
@@ -49,9 +50,13 @@ const AskForAdvertisement = () => {
 
     };
 
-    const { data: advertisements = [], refetch } = useQuery({
+    // const { data: advertisements = [], refetch } = useQuery({
+    //     queryKey: ['advertisements'],
+    //     queryFn: async () => axoisSecure.get(`/advertisements/${user.email}`).then(res => res.data)
+    // })
+    const {data: advertisements = [], refetch} = useQuery({
         queryKey: ['advertisements'],
-        queryFn: async () => axoisSecure.get(`/advertisements?email=${user.email}`).then(res => res.data)
+        queryFn: async () => axoisSecure.get(`/advertisement?email=${user.email}`).then(res => res.data)
     })
 
     console.log(advertisements);
@@ -75,6 +80,11 @@ const AskForAdvertisement = () => {
                                 <label htmlFor="description" className="block dark:text-gray-600">Description</label>
                                 <input type="text" name="description" id="description" placeholder="Description" className="w-full px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 text-black dark:text-gray-800 focus:dark:border-violet-600" {...register('description', { required: true })} />
                                 {errors.description && <span>{errors.description.message}</span>}
+                            </div>
+                            <div className="space-y-1 text-sm">
+                                <label htmlFor="medicineName" className="block dark:text-gray-600">Medicine Name</label>
+                                <input type="text" name="medicineName" id="medicineName" placeholder="Medicine Name" className="w-full px-4 py-3 rounded-md dark:border-gray-300 dark:bg-gray-50 text-black dark:text-gray-800 focus:dark:border-violet-600" {...register('medicineName', { required: true })} />
+                                {errors.medicineName && <span>{errors.medicineName.message}</span>}
                             </div>
                             <div className="space-y-1 text-sm">
                                 <input type="file" className="file-input w-full text-black" {...register('image', { required: true })} />
@@ -113,7 +123,7 @@ const AskForAdvertisement = () => {
                         </thead>
                         <tbody>
                             {
-                                advertisements.map(item => <tr key={item._id}>
+                                advertisements?.map(item => <tr key={item._id}>
                                     <th>
                                         <label>
                                             <input type="checkbox" className="checkbox" />

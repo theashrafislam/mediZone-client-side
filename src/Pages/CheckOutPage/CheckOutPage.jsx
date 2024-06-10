@@ -17,7 +17,7 @@ const CheckOutPage = () => {
     const axiosSecure = useAxoisSecure();
     const [clientSecret, setClientSecret] = useState('');
     const [transactionId, setTransactionId] = useState('');
-    const [carts, refetch] = useCart();
+    const [carts, refetch, isLoading] = useCart();
     console.log(carts);
     const totalPrice = carts.reduce((total, item) => total + item.price, 0);
 
@@ -68,15 +68,16 @@ const CheckOutPage = () => {
             console.log('paymentIntent', paymentIntent);
             if (paymentIntent.status === 'succeeded') {
                 setTransactionId(paymentIntent.id);
-                // now save the payment in the database
+
                 const payment = {
                     email: user.email,
                     price: totalPrice,
-                    data: new Date(), //utc data convert. use moment js to
+                    data: new Date(),
                     status: 'Pending',
                     cartIds: carts.map(item => item._id),
                     transactionId: paymentIntent.id,
-                    sellerEmail: carts.map(item => item.sellerEmail)
+                    sellerEmail: carts.map(item => item.sellerEmail),
+                    medicineName: carts.map(item => item.medicineName)
                 }
                 const res = await axiosSecure.post('/payments', payment)
                 console.log(res);
@@ -94,6 +95,14 @@ const CheckOutPage = () => {
             }
         }
     }
+
+    if (isLoading) {
+        return <div className='flex justify-center items-center mt-10'>
+            <span className="loading loading-bars loading-lg"></span>
+        </div>
+    }
+
+    console.log(carts);
 
     return (
         <form onSubmit={handleSubmit}>

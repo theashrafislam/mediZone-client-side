@@ -42,7 +42,7 @@ const Banner = () => {
                 className="mySwiper"
             >
                 {
-                    sliders.map(slider => <SwiperSlide className='border-2 rounded-2xl' key={slider._id}><img src={slider.medicineImage} alt="" /></SwiperSlide>)
+                    sliders.map(slider => <SwiperSlide className='border-2 rounded-2xl' key={slider._id}><img className='h-full' src={slider.medicineImage} alt="" /></SwiperSlide>)
                 }
                 
             </Swiper>

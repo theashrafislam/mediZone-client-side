@@ -1,13 +1,60 @@
 import { useQuery } from "@tanstack/react-query";
 import ShareHeader from "../../Component/ShareHeader/ShareHeader";
 import useAxoisSecure from "../../Hooks/useAxoisSecure";
+import toast, { Toaster } from "react-hot-toast";
 
 const ManageUsers = () => {
     const axoisSecure = useAxoisSecure();
-    const { data: allUsers = [] } = useQuery({
+    const { data: allUsers = [], refetch, isLoading } = useQuery({
         queryKey: ['allUsers'],
         queryFn: async () => axoisSecure.get('/users').then(res => res.data)
-    })
+    });
+
+    const handleRoleUser = (user) => {
+        const role = {
+            userRole: 'User'
+        }
+        axoisSecure.patch(`/users?id=${user._id}`, role)
+            .then(res => {
+                if(res.data.modifiedCount > 0){
+                    refetch();
+                    toast.success('User Creation Successful.')
+                }
+            })
+    }
+    const handleRoleSeller = (user) => {
+        const role = {
+            userRole: 'Seller'
+        }
+        axoisSecure.patch(`/users?id=${user._id}`, role)
+            .then(res => {
+                if(res.data.modifiedCount > 0){
+                    refetch();
+                    toast.success('Seller Creation Successful.')
+                }
+            })
+    }
+    const handleRoleAdmin = (user) => {
+        const role = {
+            userRole: 'Admin'
+        }
+        axoisSecure.patch(`/users?id=${user._id}`, role)
+            .then(res => {
+                if(res.data.modifiedCount > 0){
+                    refetch();
+                    toast.success('Admin Creation Successful.')
+                }
+            })
+    }
+    
+
+
+    if (isLoading) {
+        return <div className='flex justify-center items-center mt-10'>
+            <span className="loading loading-bars loading-lg"></span>
+        </div>
+    }
+
     return (
         <div>
             <div>
@@ -28,22 +75,27 @@ const ManageUsers = () => {
                         </thead>
                         <tbody>
                             {
-                                allUsers.map((user, index) => <tr key={user._id}>
-                                    <th>{index + 1}</th>
-                                    <td>{user.displayName}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.userRole}</td>
-                                    <td className="flex gap-2 justify-center items-center">
-                                        <button className="btn bg-[#007bff] text-white">User</button>
-                                        <button className="btn bg-[#007bff] text-white">Seller</button>
-                                        <button className="btn bg-[#007bff] text-white">Admin</button>
-                                    </td>
-                                </tr>)
+                                allUsers?.map((user, index) => {
+                                    return (
+                                        <tr key={user._id}>
+                                            <th>{index + 1}</th>
+                                            <td>{user.displayName}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.userRole}</td>
+                                            <td className="flex items-center justify-between">
+                                                <button onClick={() => handleRoleUser(user)} className="btn block bg-blue-500 text-white font-bold rounded hover:bg-blue-700">User</button>
+                                                <button onClick={() => handleRoleSeller(user)} className="btn block  bg-blue-500 text-white font-bold rounded hover:bg-blue-700">Seller</button>
+                                                <button onClick={() => handleRoleAdmin(user)} className="btn block  bg-blue-500 text-white font-bold rounded hover:bg-blue-700">Admin</button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
                             }
                         </tbody>
                     </table>
                 </div>
             </div>
+            <Toaster />
         </div>
     );
 };
