@@ -11,6 +11,9 @@ const Cart = () => {
     const axoisSecure = useAxoisSecure();
     const { user } = useAuth();
     const [sortOrder, setSortOrder] = useState('asc');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
     const handleDeleteItem = (id) => {
         Swal.fire({
@@ -70,13 +73,33 @@ const Cart = () => {
         setSortOrder(order);
     };
 
-    const sortedCarts = [...carts].sort((a, b) => {
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredCarts = carts.filter((item) => {
+        return (
+            item.medicineName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.company.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    });
+
+    const sortedCarts = [...filteredCarts].sort((a, b) => {
         if (sortOrder === 'asc') {
             return a.price - b.price;
         } else {
             return b.price - a.price;
         }
     });
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = sortedCarts.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(sortedCarts.length / itemsPerPage);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
     return (
         <div className="my-12">
@@ -94,17 +117,30 @@ const Cart = () => {
                     <button disabled={carts.length <= 0} className="block btn p-3 text-center rounded-md font-bold hover:bg-black hover:text-white bg-white">Checkout</button>
                 </Link>
             </div>
-            <div className="mb-4 flex justify-end items-center">
-                <label htmlFor="sort-order" className="block text-sm font-medium text-gray-700 mr-2">Sort By Price:</label>
-                <select
-                    id="sort-order"
-                    value={sortOrder}
-                    onChange={(e) => handleSortOrderChange(e.target.value)}
-                    className="mt-1 block pl-3 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                >
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
-                </select>
+            <div className="mb-4 flex justify-between items-center mx-5">
+                <div>
+                    <label htmlFor="search-query" className="block text-sm font-medium text-gray-700">Search:</label>
+                    <input
+                        type="text"
+                        id="search-query"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        placeholder="Search by name, company, etc."
+                        className="mt-1 block w-full pl-3 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div>
+                    <label htmlFor="sort-order" className="block text-sm font-medium text-gray-700 mr-2">Sort By Price:</label>
+                    <select
+                        id="sort-order"
+                        value={sortOrder}
+                        onChange={(e) => handleSortOrderChange(e.target.value)}
+                        className="mt-1 block pl-3 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    >
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <div className="overflow-x-auto">
@@ -120,9 +156,9 @@ const Cart = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {sortedCarts.map((item, index) => (
+                            {currentItems.map((item, index) => (
                                 <tr key={index}>
-                                    <th>{index + 1}</th>
+                                    <th>{index + 1 + indexOfFirstItem}</th>
                                     <td>{item.medicineName}</td>
                                     <td>{item.company}</td>
                                     <td>${item.price.toFixed(2)}</td>
@@ -133,6 +169,19 @@ const Cart = () => {
                             ))}
                         </tbody>
                     </table>
+                </div>
+                <div className="mt-4 flex justify-center">
+                    <nav className="inline-flex">
+                        <ul className="flex pl-0 rounded list-none flex-wrap">
+                            {[...Array(totalPages)].map((_, pageIndex) => (
+                                <li key={pageIndex} className={`page-item ${currentPage === pageIndex + 1 ? 'active' : ''}`}>
+                                    <button onClick={() => handlePageChange(pageIndex + 1)} className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none">
+                                        {pageIndex + 1}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

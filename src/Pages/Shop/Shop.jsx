@@ -121,7 +121,7 @@ const Shop = () => {
                 <p>Welcome to our shop! Browse detailed information on our medicines. Add your desired items to the cart for a seamless and convenient shopping experience.</p>
             </div>
             <div className="mt-6">
-                <div className="mb-4 flex justify-between items-center">
+                <div className="mb-4 flex justify-between items-center mx-5">
                     <div>
                         <label htmlFor="sort-order" className="block text-sm font-medium text-gray-700">Sort By Price:</label>
                         <select
