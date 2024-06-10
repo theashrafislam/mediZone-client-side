@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxoisSecure from "../../Hooks/useAxoisSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const ManageCategory = () => {
 
@@ -61,6 +62,9 @@ const ManageCategory = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Manage Categories || MediZone</title>
+            </Helmet>
             <div>
                 <ShareHeader header={'Manage Categories'} subHeader={'Add, update, or delete medicine categories. Keep your inventory organized and ensure users can easily find the products they need.'} />
             </div>

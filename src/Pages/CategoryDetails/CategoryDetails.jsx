@@ -17,7 +17,7 @@ const CategoryDetails = () => {
     const axiosSecure = useAxoisSecure();
     const navigate = useNavigate();
     const [ , refetch] = useCart();
-    console.log(category);
+    // console.log(category);
 
     const { data: categoryData = [] } = useQuery({
         queryKey: ['categoryData'],
@@ -27,7 +27,7 @@ const CategoryDetails = () => {
         }
     });
 
-    console.log(selectedItem);
+    // console.log(selectedItem);
 
     const handleEyeButton = (item) => {
         setSelectedItem(item);

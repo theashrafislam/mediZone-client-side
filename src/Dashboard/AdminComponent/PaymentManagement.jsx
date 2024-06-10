@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import ShareHeader from "../../Component/ShareHeader/ShareHeader";
 import useAxoisSecure from "../../Hooks/useAxoisSecure";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const PaymentManagement = () => {
     
@@ -29,6 +30,9 @@ const PaymentManagement = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Payment Management || MediZone</title>
+            </Helmet>
             <div>
                 <ShareHeader header={'Payment Management'} subHeader={'Track and manage all payment transactions. Approve pending payments and ensure smooth financial operations for your e-commerce platform.'} />
             </div>

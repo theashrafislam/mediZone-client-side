@@ -9,7 +9,7 @@ import useCart from "../../Hooks/useCart";
 
 const Navbar = () => {
     const { user, userLogOut } = useAuth();
-    console.log(user);
+    // console.log(user);
     const [carts] = useCart();
     // const axoisPublic = useAxoisPublic();
 

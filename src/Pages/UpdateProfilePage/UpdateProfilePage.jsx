@@ -5,6 +5,7 @@ import useAxoisSecure from "../../Hooks/useAxoisSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const UpdateProfilePage = () => {
     const { updateUserProfile, user } = useAuth();
@@ -80,6 +81,9 @@ const UpdateProfilePage = () => {
 
     return (
         <div className="flex justify-center items-center mt-5">
+            <Helmet>
+                <title>Update Your Profile || MediZone</title>
+            </Helmet>
             <div className="w-full max-w-2xl p-8 space-y-3 rounded-xl bg-[#007bff] text-black">
                 <h1 className="text-3xl font-bold text-center">Update Your Profile</h1>
                 <h1 className="text-lg text-center">Welcome to your profile update page! Keeping your profile information current ensures you get the best personalized experience.</h1>

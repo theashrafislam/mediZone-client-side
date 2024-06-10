@@ -8,6 +8,7 @@ import useAuth from "../Hooks/useAuth";
 import useAxoisSecure from "../Hooks/useAxoisSecure";
 import { TbMedicineSyrup, TbReportAnalytics } from "react-icons/tb";
 import { RiAdvertisementFill, RiAdvertisementLine } from "react-icons/ri";
+import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -31,6 +32,9 @@ const Dashboard = () => {
 
     return (
         <div className="flex">
+            <Helmet>
+                <title>Dashboard || MediZone</title>
+            </Helmet>
             {/* dashboard side bar */}
             <div className="w-64 min-h-screen bg-[#007bff] text-white">
 

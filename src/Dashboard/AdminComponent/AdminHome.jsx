@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import ShareHeader from "../../Component/ShareHeader/ShareHeader";
 import useAxoisSecure from "../../Hooks/useAxoisSecure";
+import { Helmet } from "react-helmet-async";
 
 const AdminHome = () => {
     const axoisSecure = useAxoisSecure();
@@ -14,6 +15,9 @@ const AdminHome = () => {
     const pendingTotal = allPayments.filter(item => item.status === 'Pending').reduce((sum, item) => sum + item.price, 0);
     return (
         <div>
+            <Helmet>
+                <title>Dashboard Home|| MediZone</title>
+            </Helmet>
             <div>
                 <ShareHeader header={'Dashboard Overview'} subHeader={'Monitor total sales revenue, manage users and categories, handle payments, and oversee advertisements. Your central hub for maintaining a thriving e-commerce platform.'} />
             </div>

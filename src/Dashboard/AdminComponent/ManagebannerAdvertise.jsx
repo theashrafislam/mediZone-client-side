@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import ShareHeader from "../../Component/ShareHeader/ShareHeader";
 import useAxoisSecure from "../../Hooks/useAxoisSecure";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const ManagebannerAdvertise = () => {
 
@@ -71,6 +72,9 @@ const ManagebannerAdvertise = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Manage Banner Advertisements || MediZone</title>
+            </Helmet>
             <div>
                 <ShareHeader header={'Manage Banner Advertisements'} subHeader={'Control homepage advertisements. Add or remove products from the slider, and ensure the most relevant products are prominently displayed to attract customers.'} />
             </div>

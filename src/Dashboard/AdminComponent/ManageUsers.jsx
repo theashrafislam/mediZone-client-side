@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import ShareHeader from "../../Component/ShareHeader/ShareHeader";
 import useAxoisSecure from "../../Hooks/useAxoisSecure";
 import toast, { Toaster } from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const ManageUsers = () => {
     const axoisSecure = useAxoisSecure();
@@ -16,7 +17,7 @@ const ManageUsers = () => {
         }
         axoisSecure.patch(`/users?id=${user._id}`, role)
             .then(res => {
-                if(res.data.modifiedCount > 0){
+                if (res.data.modifiedCount > 0) {
                     refetch();
                     toast.success('User Creation Successful.')
                 }
@@ -28,7 +29,7 @@ const ManageUsers = () => {
         }
         axoisSecure.patch(`/users?id=${user._id}`, role)
             .then(res => {
-                if(res.data.modifiedCount > 0){
+                if (res.data.modifiedCount > 0) {
                     refetch();
                     toast.success('Seller Creation Successful.')
                 }
@@ -40,13 +41,13 @@ const ManageUsers = () => {
         }
         axoisSecure.patch(`/users?id=${user._id}`, role)
             .then(res => {
-                if(res.data.modifiedCount > 0){
+                if (res.data.modifiedCount > 0) {
                     refetch();
                     toast.success('Admin Creation Successful.')
                 }
             })
     }
-    
+
 
 
     if (isLoading) {
@@ -62,6 +63,9 @@ const ManageUsers = () => {
             </div>
             <div>
                 <div className="overflow-x-auto">
+                    <Helmet>
+                        <title>Manage Users || MediZone</title>
+                    </Helmet>
                     <table className="table table-zebra">
                         {/* head */}
                         <thead>

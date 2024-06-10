@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import useAuth from "../Hooks/useAuth";
 import useAxoisSecure from "../Hooks/useAxoisSecure";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const ManageMedicines = () => {
     const axiosPublic = useAxoisPublic();
@@ -63,6 +64,9 @@ const ManageMedicines = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Medicine Management || MediZone</title>
+            </Helmet>
             <div>
                 <ShareHeader header={'Medicine Management'} subHeader={'Efficiently add, update, and organize your medicinal inventory. Stay in control of your product listings with our intuitive management features.'} />
             </div>

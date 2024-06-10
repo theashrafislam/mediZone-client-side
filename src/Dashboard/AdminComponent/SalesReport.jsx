@@ -3,6 +3,7 @@ import ShareHeader from "../../Component/ShareHeader/ShareHeader";
 import useAxoisSecure from "../../Hooks/useAxoisSecure";
 import { useState } from "react";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { Helmet } from "react-helmet-async";
 
 const SalesReport = () => {
     const axiosSecure = useAxoisSecure();
@@ -35,6 +36,9 @@ const SalesReport = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Sales Report || MediZone</title>
+            </Helmet>
             <div>
                 <ShareHeader header={'Sales Report'} subHeader={'View detailed sales data, filter by date range, and download reports in various formats. Analyze performance and make informed business decisions.'} />
             </div>

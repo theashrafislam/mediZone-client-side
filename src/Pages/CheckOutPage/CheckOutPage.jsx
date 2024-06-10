@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useAxoisSecure from "../../Hooks/useAxoisSecure";
 import useCart from "../../Hooks/useCart";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 
 const CheckOutPage = () => {
@@ -106,6 +107,9 @@ const CheckOutPage = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <Helmet>
+                <title>Payment || MediZone</title>
+            </Helmet>
             <CardElement
                 options={{
                     style: {

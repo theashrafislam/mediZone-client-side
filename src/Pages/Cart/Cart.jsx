@@ -4,6 +4,7 @@ import useCart from "../../Hooks/useCart";
 import useAuth from "../../Hooks/useAuth";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const Cart = () => {
     const [carts, refetch] = useCart();
@@ -103,6 +104,9 @@ const Cart = () => {
 
     return (
         <div className="my-12">
+            <Helmet>
+                <title>Cart || MediZone</title>
+            </Helmet>
             <div className="w-8/12 m-auto text-center my-5">
                 <h1 className="text-3xl font-bold">Your Shopping Cart</h1>
                 <p>Review the items in your cart before proceeding to checkout. You can update quantities, remove items, or continue shopping. When you're ready, click 'Checkout' to complete your purchase.</p>

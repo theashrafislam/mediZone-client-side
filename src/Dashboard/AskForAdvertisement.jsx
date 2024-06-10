@@ -6,6 +6,7 @@ import useAxoisSecure from "../Hooks/useAxoisSecure";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../Hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 const AskForAdvertisement = () => {
 
@@ -50,10 +51,6 @@ const AskForAdvertisement = () => {
 
     };
 
-    // const { data: advertisements = [], refetch } = useQuery({
-    //     queryKey: ['advertisements'],
-    //     queryFn: async () => axoisSecure.get(`/advertisements/${user.email}`).then(res => res.data)
-    // })
     const {data: advertisements = [], refetch} = useQuery({
         queryKey: ['advertisements'],
         queryFn: async () => axoisSecure.get(`/advertisement?email=${user.email}`).then(res => res.data)
@@ -63,6 +60,9 @@ const AskForAdvertisement = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Ask for Advertisement || MediZone</title>
+            </Helmet>
             <div>
                 <ShareHeader header={'Ask for Advertisement'} subHeader={'Promote your medicines by requesting an advertisement placement on the homepage slider. Fill out the details below to get started.'} />
             </div>

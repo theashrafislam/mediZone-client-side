@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const axoisPublic = axios.create({
-    baseURL: 'http://localhost:5000'
+    baseURL: 'https://medi-zone-server-side.vercel.app'
 })
 const useAxoisPublic = () => {
     return axoisPublic;

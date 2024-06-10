@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import ShareHeader from '../Component/ShareHeader/ShareHeader';
 import useAxoisSecure from '../Hooks/useAxoisSecure';
 import useAuth from '../Hooks/useAuth';
+import { Helmet } from 'react-helmet-async';
 
 const SellerHome = () => {
     const axoisSecure = useAxoisSecure();
@@ -17,6 +18,9 @@ const SellerHome = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Seller Home || MediZone</title>
+            </Helmet>
             <div className='mb-6'>
                 <ShareHeader
                     header={'Welcome to Your Dashboard'}

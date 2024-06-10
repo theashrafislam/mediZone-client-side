@@ -4,6 +4,7 @@ import useAuth from '../../Hooks/useAuth';
 import useAxoisSecure from '../../Hooks/useAxoisSecure';
 import useCart from '../../Hooks/useCart';
 import { useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const InvoicePage = () => {
     const { user } = useAuth();
@@ -47,6 +48,9 @@ const InvoicePage = () => {
 
     return (
         <div className="max-w-4xl mx-auto my-10 p-8 bg-white shadow-lg">
+            <Helmet>
+                <title>Your Invoice || MediZone</title>
+            </Helmet>
             <div className='border-2 p-3' ref={printRef}>
                 <header className="text-center mb-8">
                     <img src={logo} alt="Website Logo" className="w-32 mx-auto mb-4" />

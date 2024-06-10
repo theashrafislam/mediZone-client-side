@@ -13,7 +13,7 @@ const CategoryCardSection = () => {
             return res.data;
         }
     });
-    console.log(categorys);
+    // console.log(categorys);
 
     return (
         <div className="m-12">
