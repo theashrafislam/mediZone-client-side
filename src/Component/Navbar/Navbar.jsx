@@ -57,13 +57,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <div className="dropdown dropdown-end mr-4">
-                        <button tabIndex={0} className="btn m-1">Language</button>
-                        <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                            <li className="font-semibold"><button>English</button></li>
-                            <li className="font-semibold"><button>Bangla</button></li>
-                        </ul>
-                    </div>
+                    
                     {user ? (
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
