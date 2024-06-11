@@ -31,7 +31,7 @@ const Dashboard = () => {
 
 
     return (
-        <div className="flex">
+        <div className="flex overflow-x-scroll">
             <Helmet>
                 <title>Dashboard || MediZone</title>
             </Helmet>
