@@ -64,6 +64,9 @@ const SalesReport = () => {
                             className="mt-1 block w-full pl-3 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         />
                     </div>
+
+                </div>
+                <div className="flex justify-center items-center my-3">
                     <DownloadTableExcel
                         filename="sales_report"
                         sheet="sales"

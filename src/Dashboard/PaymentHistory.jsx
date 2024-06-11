@@ -5,15 +5,15 @@ import { Helmet } from "react-helmet-async";
 
 const PaymentHistory = () => {
     const axiosSecure = useAxoisSecure();
-    const {user} = useAuth();
+    const { user } = useAuth();
 
-    const {data: paymentHistory = []} = useQuery({
+    const { data: paymentHistory = [] } = useQuery({
         queryKey: ['payment-history'],
-        queryFn: async() => {
+        queryFn: async () => {
             const res = await axiosSecure.get(`/payments?email=${user?.email}`);
             return res.data;
         }
-    })
+    });
 
     console.log(paymentHistory);
 
@@ -23,36 +23,38 @@ const PaymentHistory = () => {
                 <title>Payment History || MediZone</title>
             </Helmet>
             <h2 className="text-2xl font-bold mb-4">Payment History</h2>
-            <table className="min-w-full bg-white border">
-                <thead>
-                    <tr>
-                        <th className="py-2 px-4 border">Transaction ID</th>
-                        <th className="py-2 px-4 border">Date</th>
-                        <th className="py-2 px-4 border">Price</th>
-                        <th className="py-2 px-4 border">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {paymentHistory.length > 0 ? (
-                        paymentHistory.map((payment) => (
-                            <tr key={payment.transactionId}>
-                                <td className="py-2 px-4 border">{payment.transactionId}</td>
-                                <td className="py-2 px-4 border">{new Date(payment.data).toLocaleDateString(undefined, {
+            <div className="overflow-x-auto">
+                <table className="min-w-full bg-white border">
+                    <thead>
+                        <tr>
+                            <th className="py-2 px-4 border">Transaction ID</th>
+                            <th className="py-2 px-4 border">Date</th>
+                            <th className="py-2 px-4 border">Price</th>
+                            <th className="py-2 px-4 border">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {paymentHistory.length > 0 ? (
+                            paymentHistory.map((payment) => (
+                                <tr key={payment.transactionId}>
+                                    <td className="py-2 px-4 border">{payment.transactionId}</td>
+                                    <td className="py-2 px-4 border">{new Date(payment.data).toLocaleDateString(undefined, {
                                         year: 'numeric',
                                         month: 'long',
                                         day: 'numeric',
                                     })}</td>
-                                <td className="py-2 px-4 border">${payment.price.toFixed(2)}</td>
-                                <td className="py-2 px-4 border">{payment.status}</td>
+                                    <td className="py-2 px-4 border">${payment.price.toFixed(2)}</td>
+                                    <td className="py-2 px-4 border">{payment.status}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td className="py-2 px-4 border" colSpan="4">No payment history available</td>
                             </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td className="py-2 px-4 border" colSpan="4">No payment history available</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
