@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
 const axoisSecure = axios.create({
-    baseURL: 'https://medi-zone-server-side.vercel.app'
+    baseURL: 'http://localhost:5000'
 })
 const useAxoisSecure = () => {
     const navigate =useNavigate();

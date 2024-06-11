@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
                 const userInfo = {
                     email: currentUser.email
                 }
-                axoisPublic.post('jwt', userInfo)
+                axoisPublic.post('/jwt', userInfo)
                     .then(res => {
                         if (res.data.token) {
                             localStorage.setItem('token', res.data.token);

@@ -1,23 +1,11 @@
-// import img1 from '../assets/BannerImages/image1.jpg';
-// import img2 from '../assets/BannerImages/image2.jpeg';
-// import img3 from '../assets/BannerImages/image3.jpeg';
-// import img4 from '../assets/BannerImages/image4.jpg';
-// import img5 from '../assets/BannerImages/image5.jpg';
-// import img6 from '../assets/BannerImages/image6.jpg';
-
-import { FreeMode, Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
-import { useQuery } from '@tanstack/react-query';
-import useAxoisPublic from '../../Hooks/useAxoisPublic';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
+import img1 from "../../../public/IMG-20231023-WA0137.webp"
+import useAxoisPublic from "../../Hooks/useAxoisPublic";
+import { useQuery } from "@tanstack/react-query";
 
 
 const Banner = () => {
-
     const axoisPublic = useAxoisPublic();
 
     const { data: sliders = [] } = useQuery({
@@ -27,26 +15,15 @@ const Banner = () => {
             return res.data;
         }
     });
-
-
+    console.log(sliders);
     return (
-        <div className=''>
-            <Swiper
-                slidesPerView={3}
-                spaceBetween={30}
-                freeMode={true}
-                pagination={{
-                    clickable: true,
-                }}
-                modules={[FreeMode, Pagination]}
-                className="mySwiper"
-            >
-                {
-                    sliders.map(slider => <SwiperSlide className='border-2 rounded-2xl' key={slider._id}><img className='h-full' src={slider.medicineImage} alt="" /></SwiperSlide>)
-                }
-                
-            </Swiper>
-        </div>
+        <Carousel>
+            {
+                sliders.map(banner => <div key={banner._id}>
+                    <img className="max-h-screen" src={banner.medicineImage} />
+                </div>)
+            }
+        </Carousel>
     );
 };
 

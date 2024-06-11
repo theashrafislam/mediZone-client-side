@@ -5,9 +5,10 @@ import useAxoisSecure from "./useAxoisSecure";
 const useCart = () => {
     const axiosSecure = useAxoisSecure();
     const {user} = useAuth();
+    const token = localStorage.getItem('token');
     const { refetch, data: carts = [], isLoading } = useQuery({
         queryKey: ['carts', user?.email],
-        enabled: !!user?.email,
+        enabled: !!user?.email && !!token,
         queryFn: async () => {
             const res = await axiosSecure.get(`/carts?email=${user.email}`);
             return res.data;
