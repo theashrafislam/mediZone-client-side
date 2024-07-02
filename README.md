@@ -5,19 +5,10 @@
 
 **Live site URL:** https://medizone-d0736.web.app/
 
+### MediZone Overview:
+MediZone is an e-commerce platform with a homepage, a shop, a shopping cart icon and a "Join" button. Users can register or log in as a user, a medicine seller or an administrator. Sellers can add medicines to manufacturer requests, which requires administrator approval. The platform also includes a payment system for transactions.
 
 ### **Here are ten bullet points features**
-
-
-* Seamless User Experience: Our platform provides a smooth and intuitive user interface, ensuring a hassle-free shopping experience for purchasing medications and healthcare products.
-
-* Robust Authentication: Secure user authentication with email/password, Google, and GitHub login options. User roles include customer, seller, and admin with different access levels.
-
-* Dynamic Home Page: Featuring an attractive slider section, category cards, discount products carousel, and additional sections to highlight special offers and new arrivals.
-
-* Responsive Design: Fully responsive design ensures optimal viewing on mobile, tablet, and desktop devices, including a responsive dashboard for all users.
-
-* Advanced Cart Features: Add, remove, and manage products in the cart with ease. Adjust quantities and proceed to checkout with a streamlined process.
 
 * Secure Payments: Integrated with Stripe for secure and reliable payment processing. Users receive a detailed invoice after successful payment.
 
@@ -25,9 +16,10 @@
 
 * Seller Dashboard: Sellers can manage their products, track sales, request advertisements, and view payment history through a dedicated dashboard.
 
-* Enhanced User Interactions: Implemented SweetAlert2 for stylish notifications and alerts for CRUD operations, successful logins, and sign-ups.
+### Technologies Used
 
-* Efficient Data Management: Utilize Tanstack Query for efficient data fetching, pagination, sorting, and searching across the entire application, ensuring fast and reliable data interactions.
-
-
+* **Frontend**: React JS, Tailwind CSS
+* **Backend**: Node.js, Express.js
+* **Database**: MongoDB
+  
 **Thank you**
