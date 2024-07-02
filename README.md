@@ -24,8 +24,6 @@ MediZone is an e-commerce platform with a homepage, a shop, a shopping cart icon
 
 ### Installation Instructions
 
-### Installation Instructions
-
 * **Node.js**: Ensure Node.js is installed from [nodejs.org](https://nodejs.org/).
 * **Project Dependencies**: Run `npm install`.
 * **Vite**: Install Vite globally if needed.
