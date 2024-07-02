@@ -10,16 +10,28 @@ MediZone is an e-commerce platform with a homepage, a shop, a shopping cart icon
 
 ### **Here are ten bullet points features**
 
-* Secure Payments: Integrated with Stripe for secure and reliable payment processing. Users receive a detailed invoice after successful payment.
+* **Secure Payments:** Stripe integration ensures reliable payment processing with detailed invoices.
 
-* Comprehensive Admin Dashboard: Manage users, categories, payments, sales reports, and banner advertisements with a powerful admin interface.
-
-* Seller Dashboard: Sellers can manage their products, track sales, request advertisements, and view payment history through a dedicated dashboard.
+* **Admin Dashboard:** Manage users, categories, payments, sales reports, and ads.
+  
+* **Seller Dashboard:** Manage products, track sales, request ads, and view payment history.
 
 ### Technologies Used
 
 * **Frontend**: React JS, Tailwind CSS
 * **Backend**: Node.js, Express.js
 * **Database**: MongoDB
+
+### Installation Instructions
+
+### Installation Instructions
+
+* **Node.js**: Ensure Node.js is installed from [nodejs.org](https://nodejs.org/).
+* **Project Dependencies**: Run `npm install`.
+* **Vite**: Install Vite globally if needed.
+* **ESLint**: Install ESLint globally if needed.
+* **React and React-DOM**: Ensure these are installed.
+* **Tailwind CSS**: Ensure Tailwind CSS is installed as a dev dependency.
+* **Other Dependencies**: Manually install any missing packages.
   
 **Thank you**
